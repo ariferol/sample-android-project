@@ -6,142 +6,215 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnAllList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yenile"
-            android:visibility="visible" />
-
-        <Button
-            android:id="@+id/btnExit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:onClick="clickexit"
-            android:text="Çıkış" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="5sp">
-
-        <DatePicker
-            android:id="@+id/dpFood"
-            android:layout_width="match_parent"
-            android:layout_height="173sp"
-            android:layout_gravity="center"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner" />
-
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="match_parent"
-            android:layout_height="31sp"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:text="deneme"
-            android:background="#FFFF5722"
-            android:textSize="23sp" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:background="@color/colorPrimary"
-        android:textStyle="bold"
-        android:orientation="horizontal"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
-            android:layout_width="80sp"
-            android:layout_height="28sp">
-            <TextView
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="Kalori"
-                android:id="@+id/txtHeaderFoodCalorie"
-                android:textSize="19sp"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:textColor="@android:color/white"
-                android:gravity="left"
-                android:layout_gravity="left"
-                android:paddingLeft="75sp"
-                android:id="@+id/txtHeaderFoodDetail"
+            android:layout_height="match_parent"
+            android:id="@+id/layout">
+
+            <ImageView
+                android:id="@+id/header_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="#009688"
+                android:scaleType="centerCrop" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_below="@+id/header_cover_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-130dp"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:padding="20dp"
+                android:scaleType="centerCrop"
+                android:src="@android:mipmap/sym_def_app_icon"
+                app:civ_border_color="#FFFFFFFF"
+                app:civ_border_width="3dp" />
+
+            <RelativeLayout
+                android:id="@+id/profile_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Yemek"
-                android:layout_centerInParent="true"
-                android:textSize="19sp" />
-        </LinearLayout>
-    </LinearLayout>
-<!--    <ListView-->
-<!--        android:id="@+id/lstFoodList"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:cacheColorHint="#00000000"-->
-<!--        android:divider="@drawable/list_divider"-->
-<!--        android:dividerHeight="1px"/>-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:scrollbars="vertical"
-        android:clickable="true"
-        android:background="#ECEFF1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+                android:layout_below="@+id/header_cover_image"
+                android:background="#ecfcff"
+                android:elevation="4dp"
+                android:paddingBottom="10dp">
 
-    <LinearLayout
-        android:background="#FFFF5722"
-        android:textStyle="italic"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:layout_width="80sp"
-            android:layout_height="26sp">
-            <TextView
-                android:textColor="@android:color/white"
-                android:gravity="left"
-                android:layout_gravity="left"
-                android:paddingLeft="13sp"
-                android:text="0"
-                android:id="@+id/txtFooterCalorie"
-                android:textSize="19sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:textColor="@android:color/white"
-                android:gravity="left"
-                android:layout_gravity="left"
-                android:id="@+id/txtFooterToplam"
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="70dp"
+                    android:text="Arif EROL"
+                    android:textColor="#3e64ff"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtRefresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#3e64ff"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="Yenile
+"/>
+
+                <TextView
+                    android:id="@+id/txtSignOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#3e64ff"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:text="Çıkış" />
+
+            </RelativeLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TOPLAM"
-                android:layout_centerInParent="true"
-                android:textSize="19sp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_below="@+id/profile_layout"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                >
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="#009688"
+                    >
+
+                    <DatePicker
+                        android:id="@+id/dpFood"
+                        style="@style/MyDatePickerStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="173sp"
+                        android:layout_gravity="center"
+
+                        android:calendarViewShown="false" />
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="31sp"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="deneme"
+                        android:background="#FFFF5722"
+                        android:textSize="23sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:background="#009688"
+                    android:textStyle="bold"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <RelativeLayout
+                        android:layout_width="80sp"
+                        android:layout_height="28sp">
+                        <TextView
+                            android:textColor="@android:color/white"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="Kalori"
+                            android:id="@+id/txtHeaderFoodCalorie"
+                            android:textSize="19sp"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/white"
+                            android:gravity="left"
+                            android:layout_gravity="left"
+                            android:paddingLeft="75sp"
+                            android:id="@+id/txtHeaderFoodDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Yemek"
+                            android:layout_centerInParent="true"
+                            android:textSize="19sp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <!--    <ListView-->
+                <!--        android:id="@+id/lstFoodList"-->
+                <!--        android:layout_width="wrap_content"-->
+                <!--        android:layout_height="wrap_content"-->
+                <!--        android:cacheColorHint="#00000000"-->
+                <!--        android:divider="@drawable/list_divider"-->
+                <!--        android:dividerHeight="1px"/>-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="290dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:scrollbars="vertical"
+                        android:clickable="true"
+                        android:background="#ECEFF1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:background="#FFFF5722"
+                        android:textStyle="italic"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="80sp"
+                            android:layout_height="26sp">
+                            <TextView
+                                android:textColor="@android:color/white"
+                                android:gravity="left"
+                                android:layout_gravity="left"
+                                android:paddingLeft="13sp"
+                                android:text="0"
+                                android:id="@+id/txtFooterCalorie"
+                                android:textSize="19sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textColor="@android:color/white"
+                                android:gravity="left"
+                                android:layout_gravity="left"
+                                android:id="@+id/txtFooterToplam"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TOPLAM"
+                                android:layout_centerInParent="true"
+                                android:textSize="19sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

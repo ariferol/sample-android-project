@@ -6,10 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dailyfoodmenu.service.IServices;
 import com.example.dailyfoodmenu.service.SampleServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,8 +35,6 @@ import java.util.stream.Collectors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -69,11 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
     Context context = this;
     DatePicker dpFood;
-    TextView txtDate;
     RecyclerView lstFoodList;
     Button btnAllList;
-    TextView txtFooterCalorie;
-    TextView txtFooterDetail;
+    TextView txtDate,txtFooterCalorie,txtFooterDetail,txtRefresh,txtSignOut;
 
     private static SimpleDateFormat dfPattern = new SimpleDateFormat("dd.MM.yyyy");
     private static String sampleFoodListJson = "[{\"foodDate\":\"09.03.2020\",\"calorie\":1.1,\"foodDescription\":\"Mercimek Çorba\"},{\"foodDate\":\"09.03.2020\",\"calorie\":1.2,\"foodDescription\":\"Etli Kuru Fasulye\"},{\"foodDate\":\"09.03.2020\",\"calorie\":1.3,\"foodDescription\":\"Pirinç Pilavı\"},{\"foodDate\":\"09.03.2020\",\"calorie\":1.4,\"foodDescription\":\"Turşu\"},{\"foodDate\":\"09.03.2020\",\"calorie\":1.5,\"foodDescription\":\"Laz Böreği\"},{\"foodDate\":\"10.03.2020\",\"calorie\":1.1,\"foodDescription\":\"Şehriye Çorba\"},{\"foodDate\":\"10.03.2020\",\"calorie\":1.2,\"foodDescription\":\"Mantarlı Tavuk Biftek\"},{\"foodDate\":\"10.03.2020\",\"calorie\":1.3,\"foodDescription\":\"Makarna Salata\"},{\"foodDate\":\"10.03.2020\",\"calorie\":1.4,\"foodDescription\":\"Ayran\"},{\"foodDate\":\"10.03.2020\",\"calorie\":1.5,\"foodDescription\":\"Meyve\"},{\"foodDate\":\"11.03.2020\",\"calorie\":1.1,\"foodDescription\":\"Tavuk Suyu Çorba\"},{\"foodDate\":\"11.03.2020\",\"calorie\":1.2,\"foodDescription\":\"Yoğurtlu Köfte\"},{\"foodDate\":\"11.03.2020\",\"calorie\":1.3,\"foodDescription\":\"Barbunya Pilaki\"},{\"foodDate\":\"11.03.2020\",\"calorie\":1.4,\"foodDescription\":\"Seçmeli İçecek\"},{\"foodDate\":\"11.03.2020\",\"calorie\":1.5,\"foodDescription\":\"Trileçe/Sütlaç\"},{\"foodDate\":\"12.03.2020\",\"calorie\":1.1,\"foodDescription\":\"Yeşil Mercimek Çorba\"},{\"foodDate\":\"12.03.2020\",\"calorie\":1.2,\"foodDescription\":\"Orman Kebabı\"},{\"foodDate\":\"12.03.2020\",\"calorie\":1.3,\"foodDescription\":\"Peynirli Su Böreği\"},{\"foodDate\":\"12.03.2020\",\"calorie\":1.4,\"foodDescription\":\"Pembe Sultan\"},{\"foodDate\":\"12.03.2020\",\"calorie\":1.5,\"foodDescription\":\"Komposto\"},{\"foodDate\":\"13.03.2020\",\"calorie\":1.1,\"foodDescription\":\"Ezogelin Çorba\"},{\"foodDate\":\"13.03.2020\",\"calorie\":1.2,\"foodDescription\":\"Et Döner-Garnitür\"},{\"foodDate\":\"13.03.2020\",\"calorie\":1.3,\"foodDescription\":\"Pirinç Pilavı\"},{\"foodDate\":\"13.03.2020\",\"calorie\":1.4,\"foodDescription\":\"Ayran\"},{\"foodDate\":\"13.03.2020\",\"calorie\":1.5,\"foodDescription\":\"Sakızlı Muhallebi/Revani\"}]";
@@ -85,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dpFood = findViewById(R.id.dpFood);
         txtDate = findViewById(R.id.txtDate);
-        btnAllList = findViewById(R.id.btnAllList);
+//        btnAllList = findViewById(R.id.btnAllList);
         txtFooterCalorie = findViewById(R.id.txtFooterCalorie);
 //        txtFooterDetail = findViewById(R.id.txtFooterFoodToplam);
         lstFoodList = findViewById(R.id.recyclerView);
@@ -94,6 +87,49 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.scrollToPosition(0);
         lstFoodList.setLayoutManager(linearLayoutManager);
         lstFoodList.setHasFixedSize(true);
+
+        txtRefresh = (TextView) findViewById(R.id.txtRefresh);
+        txtSignOut = (TextView) findViewById(R.id.txtSignOut);
+
+        txtRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar thisDay = Calendar.getInstance();
+                int year = thisDay.get(Calendar.YEAR);
+                int month = thisDay.get(Calendar.MONTH);
+                int day = thisDay.get(Calendar.DAY_OF_MONTH);
+                Date currentDate = BindDateParams(year, month, day);
+                getSampleFoodListAsAService(true, currentDate, currentDate, true);
+            }
+        });
+
+        txtSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Çıkmak istediğinizden emin misiniz?");
+                builder.setCancelable(true);
+                builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                finish();
+//                System.exit(0);
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         /*Su anki tarih bilgisi component ve filter a ekleniyor*/
         Calendar thisDay = Calendar.getInstance();
@@ -110,17 +146,17 @@ public class MainActivity extends AppCompatActivity {
                 bindListView(true, currentDate, currentDate);            }
         });
 
-        btnAllList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar thisDay = Calendar.getInstance();
-                int year = thisDay.get(Calendar.YEAR);
-                int month = thisDay.get(Calendar.MONTH);
-                int day = thisDay.get(Calendar.DAY_OF_MONTH);
-                Date currentDate = BindDateParams(year, month, day);
-                getSampleFoodListAsAService(true, currentDate, currentDate, true);
-            }
-        });
+//        btnAllList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Calendar thisDay = Calendar.getInstance();
+//                int year = thisDay.get(Calendar.YEAR);
+//                int month = thisDay.get(Calendar.MONTH);
+//                int day = thisDay.get(Calendar.DAY_OF_MONTH);
+//                Date currentDate = BindDateParams(year, month, day);
+//                getSampleFoodListAsAService(true, currentDate, currentDate, true);
+//            }
+//        });
 
 //        lstFoodList.setFocusableInTouchMode(true);
 //        lstFoodList.requestFocus();
@@ -363,28 +399,28 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void clickexit(View view) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage("Çıkmak istediğinizden emin misiniz?");
-        builder.setCancelable(true);
-        builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-//                finish();
-//                System.exit(0);
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
+//    public void clickexit(View view) {
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        builder.setMessage("Çıkmak istediğinizden emin misiniz?");
+//        builder.setCancelable(true);
+//        builder.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//
+//        builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+////                finish();
+////                System.exit(0);
+//                moveTaskToBack(true);
+//                android.os.Process.killProcess(android.os.Process.myPid());
+//                System.exit(1);
+//            }
+//        });
+//        AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+//    }
 }
