@@ -58,6 +58,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:theme="@style/TextInputLayoutAppearance"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconDrawable="@drawable/male_user_24"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp">
                 <EditText
@@ -71,17 +73,21 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextInputLayoutAppearance"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:passwordToggleEnabled="true"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@android:color/white"
+                app:startIconDrawable="@drawable/user_password_24"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:layout_marginTop="20dp">
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_password"
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Şifre"
+
                     android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
             <Button
