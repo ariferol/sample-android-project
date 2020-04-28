@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".LoginFormActivity">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        android:elevation="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="15dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+<!--                <TextView-->
+<!--                    android:id="@+id/textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Hoşgeldiniz,"-->
+<!--                    android:textSize="28sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textColor="@android:color/white"/>-->
+                <TextView
+                    android:id="@+id/txtsignup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kayıt Ol"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="4dp"
+                    android:onClick="moveToRegistrationFormActivity"/>
+            </RelativeLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingTop="10dp"-->
+<!--                android:text="Bilgileri girdikten sonra giriş butonuna basarak devam ediniz."-->
+<!--                android:textStyle="bold"-->
+<!--                android:fontFamily="sans-serif-light"/>-->
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/login_transparent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:theme="@style/TextInputLayoutAppearance"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+                <EditText
+                    android:id="@+id/txt_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Kullanıcı Adı"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:passwordToggleEnabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/txt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:ems="10"
+                    android:hint="Şifre"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/btn_login"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:layout_marginTop="32dp"
+                android:onClick="Login"
+                android:padding="15dp"
+                android:text="Giriş"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
